@@ -1,21 +1,36 @@
-const { Comment, Photo } = require("../models/index");
+const { Comment, Photo, User } = require("../models/index");
 const AppError = require("../utils/app-error");
 class CommentController {
   async getAllComment(req, res) {
-    const { id } = req.user;
-    const result = await Comment.findAll({
-      where: {
-        UserId: id,
-      },
-    });
+    Comment.findAll({
+      include:
+      [
+        {model: Photo,
+          attributes: ["id", "title", "caption", "poster_image_url"],},
+        {model: User,
+          attributes: ["id", "username", "profile_image_url", "phone_number"],}
+      ]
+    })
+    .then(result =>{
+      res.status(200).json(result);
+  })
+  .catch(err =>{
+      res.status(500).json(err);
+  })
+    // const { id } = req.user;
+    // const result = await Comment.findAll({
+    //   where: {
+    //     UserId: id,
+    //   },
+    // });
 
-    res.status(200).send({
-      status: "success",
-      total: result.length,
-      data: {
-        comment: result,
-      },
-    });
+    // res.status(200).send({
+    //   status: "success",
+    //   total: result.length,
+    //   data: {
+    //     comment: result,
+    //   },
+    // });
   }
 
   async updateComment(req, res, next) {

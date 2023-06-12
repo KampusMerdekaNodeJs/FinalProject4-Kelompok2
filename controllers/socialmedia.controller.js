@@ -67,8 +67,16 @@ class SosmedController {
     const { sosId } = req.params;
     const { id } = req.user;
     const { social_media_url, name } = req.body;
+    const existingSosmed = await Sosmed.findOne({
+      where: {
+        id: sosId,
+        UserId: id,
+      },
+    });
 
-    //query Update
+    if (!existingSosmed) {
+      throw new AppError("Social media not found", 404);
+    }
     const result = await Sosmed.update(
       {
         name,
@@ -82,6 +90,7 @@ class SosmedController {
         individualHooks: true,
       }
     );
+
     res.send({
       status: "success",
       totalUpdated: result[1].length,

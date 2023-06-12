@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "12345",
+    "database": "mygram_db",
+    "host": "localhost",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "jS2wL5fJKdg9lHJESTfe",
+    "database": "railway",
+    "host": "containers-us-west-179.railway.app",
+    "dialect": "postgres",
+    "port": 6283
+  }
+}
